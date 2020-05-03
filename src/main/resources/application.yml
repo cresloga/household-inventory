@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /householdinventory
+  
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://household-inventory-dev.cutzcuqui2gy.us-east-1.rds.amazonaws.com:5432/postgres
+    username: cresloga
+    password: inventory_123
+    
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+              

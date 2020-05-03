@@ -1,0 +1,221 @@
+openapi: "3.0.2"
+info:
+  description: "This is a Household Inventory server for groceries.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io)."
+  version: "1"
+  title: "Household Inventory"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "cresloga@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+servers: 
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/curiousloga/HouseholdInventory/1
+  - url: host-dev/household-inventory
+    description: Dev environment
+  - url: host-prod/household-inventory
+    description: PROD environment
+
+
+tags:
+- name: "Groceries"
+  description: "Groceries for your home"
+  externalDocs:
+    description: "Find out more"
+    url: "http://cresloga.com"
+
+
+paths:
+  '/v1/groceries':
+    get:
+      summary: Get all Items
+      description: Get All grocery items in the household
+      operationId: getAllV1
+      tags: 
+      - Groceries
+      responses:
+        200:
+          $ref: '#/components/responses/GetAllResponse'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Create an Item
+      description: Create an item
+      operationId: 'createV1'
+      tags:
+      - Groceries
+      requestBody:
+        $ref: '#/components/requestBodies/Request'
+      responses:
+        201:
+          description: Created
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  '/v1/groceries/{id}':
+    get:
+      summary: Get an Item
+      description: Get a specific grocery item by id
+      operationId: getByIdV1
+      tags:
+      - Groceries
+      parameters: 
+      - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          $ref: '#/components/responses/GetResponse'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Replace an Item
+      description: Replace an item
+      operationId: replaceByIdV1
+      tags:
+      - Groceries
+      parameters: 
+      - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/Request'
+      responses:
+        204:
+          description: Replaced
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Delete an Item
+      description: Delete an item
+      operationId: deleteByIdV1
+      tags:
+      - Groceries
+      parameters: 
+      - $ref: '#/components/parameters/id'
+      responses:
+        204:
+          description: Deleted
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/ServerError'
+  '/v1/groceries/{id}/quantity/{quantity}':
+    patch:
+      summary: Update an Item
+      description: Update a specific grocery item by id
+      operationId: updateByIdV1
+      tags:
+      - Groceries
+      parameters: 
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/quantity'
+      responses:
+        204:
+          description: Updated
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        500:
+          $ref: '#/components/responses/ServerError'
+components:
+  parameters:
+    name:
+      in: path
+      name: name
+      required: true
+      schema:
+        type: string
+    id:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        format: int32
+    quantity:
+      in: path
+      name: quantity
+      required: true
+      schema:
+        type: number
+  schemas:
+    Items:
+      type: array
+      items:
+        $ref: '#/components/schemas/Item'
+    Item:
+      type: object
+      required: 
+      - name
+      - quantity
+      properties:
+        id: 
+          type: integer
+          example: 1
+          readOnly: true
+        name:
+          description: Name of the item
+          type: string
+          example: tomatoes
+        quantity:
+          description: Quantities in Kg
+          type: number
+          example: 5
+    Status:
+      type: object
+      required:
+      - code
+      - description
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+  requestBodies:
+    Request:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Item'
+  responses:
+    GetAllResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Status'
+              - type: object
+                properties:
+                  items:
+                    $ref: '#/components/schemas/Items'
+    GetResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Status'
+              - type: object
+                properties:
+                  item:
+                    $ref: '#/components/schemas/Item'
+    ServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+            
+        
