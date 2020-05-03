@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: household-inventory
-        image: household-inventory-image
+        image: household-inventory
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
