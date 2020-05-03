@@ -6,11 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: household-inventory
+      app: household-inventory-app
   template:
     metadata:
       labels:
-        app: household-inventory
+        app: household-inventory-app
     spec:
       containers:
       - name: household-inventory
@@ -25,7 +25,7 @@ metadata:
   name: household-inventory-lb
 spec:
   selector:
-    app: household-inventory
+    app: household-inventory-app
   ports:
   - name: http
     protocol: TCP
