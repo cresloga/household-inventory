@@ -18,11 +18,11 @@ phases:
     commands:
       - echo $REPOSITORY_URI
       - echo $TAG
-      - docker image build --tag $REPOSITORY_URI:$TAG . 
+      - docker image build --tag $REPOSITORY_URI:household-inventory . 
 
   post_build:
     commands:
-      - docker image push $REPOSITORY_URI:$TAG
+      - docker image push $REPOSITORY_URI:household-inventory
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
