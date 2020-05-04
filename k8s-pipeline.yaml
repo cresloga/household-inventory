@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: household-inventory-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: household-inventory
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: household-inventory
-        image: household-inventory
+        image: GET_CONTAINER_IMAGE_AT_RUNTIME
         ports:
         - containerPort: 8080
 ---
