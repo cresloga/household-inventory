@@ -1,7 +1,6 @@
 package com.cresloga.inventory.household.householdinventory.controller;
 
 import java.math.BigDecimal;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +28,12 @@ public class GroceryV1ApiController implements GroceryV1Api {
 
 	private static final Logger log = LoggerFactory.getLogger(GroceryV1ApiController.class);
 
-	private final ObjectMapper objectMapper;
-
 	private final HttpServletRequest request;
 
 	private final GroceryService service;
 
 	@Autowired
-	public GroceryV1ApiController(ObjectMapper objectMapper, HttpServletRequest request, GroceryService service) {
-		this.objectMapper = objectMapper;
+	public GroceryV1ApiController(HttpServletRequest request, GroceryService service) {
 		this.request = request;
 		this.service = service;
 	}
