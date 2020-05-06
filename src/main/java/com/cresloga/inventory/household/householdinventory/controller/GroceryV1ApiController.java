@@ -45,7 +45,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				service.create(body);
 				return new ResponseEntity<Status>(HttpStatus.CREATED);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while adding the item: ", e);
 				return new ResponseEntity<Status>(Status.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -59,7 +59,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				service.deleteById(id);
 				return new ResponseEntity<Status>(HttpStatus.NO_CONTENT);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while deleting item by id: {} : {}", id, e);
 				return new ResponseEntity<Status>(Status.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -73,7 +73,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				Items items = service.getAll();
 				return new ResponseEntity<GetAllResponse>(GetAllResponse.build(items), HttpStatus.OK);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while listing all items: ", e);
 				return new ResponseEntity<GetAllResponse>(GetAllResponse.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -88,7 +88,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				Item item = service.getById(id);
 				return new ResponseEntity<GetResponse>(GetResponse.build(item), HttpStatus.OK);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while fetching item by id: {} : {}", id, e);
 				return new ResponseEntity<GetResponse>(GetResponse.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -103,7 +103,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				service.replaceById(id, body);
 				return new ResponseEntity<Status>(HttpStatus.NO_CONTENT);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while replacing item by id: {} : {}", id, e);
 				return new ResponseEntity<Status>(Status.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -118,7 +118,7 @@ public class GroceryV1ApiController implements GroceryV1Api {
 				service.updateById(id, quantity);
 				return new ResponseEntity<Status>(HttpStatus.NO_CONTENT);
 			} catch (Exception e) {
-				log.error("Couldn't serialize response for content type application/json", e);
+				log.error("Error while updating item by id: {} : {}", id, e);
 				return new ResponseEntity<Status>(Status.build(e), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
