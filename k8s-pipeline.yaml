@@ -15,6 +15,22 @@ spec:
       containers:
       - name: household-inventory
         image: GET_CONTAINER_IMAGE_AT_RUNTIME
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: password
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: dbHost
         ports:
         - containerPort: 8080
 ---
